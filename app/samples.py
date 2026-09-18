@@ -1,6 +1,24 @@
-"""样本监管领域的最小起点。"""
+"""样本监管领域入口（向后兼容模块）。
+
+历史起点只保留 ``Sample`` 与健康检查；完整监管链实现见
+:mod:`app.service` / :mod:`app.models`，这里统一再导出。
+"""
 
 from dataclasses import dataclass
+
+from .models import Actor, AnomalyKind, Athlete, Role, Status, sign_handover
+from .service import CustodyService
+
+__all__ = [
+    "Sample",
+    "CustodyService",
+    "Actor",
+    "Athlete",
+    "Role",
+    "Status",
+    "AnomalyKind",
+    "sign_handover",
+]
 
 
 @dataclass(frozen=True)
@@ -9,11 +27,3 @@ class Sample:
 
     barcode: str
     batch: str
-
-
-class CustodyService:
-    """提供监管链服务的基础健康状态。"""
-
-    def health(self) -> dict[str, str]:
-        return {"service": "custody", "status": "ok"}
-
